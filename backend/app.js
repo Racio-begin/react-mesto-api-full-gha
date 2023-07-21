@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const auth = require('./middlewares/auth');
 
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const { createUser, login } = require('./controllers/users');
@@ -26,6 +28,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 // применить для всех роутов встроенный в express пасчер (чтение тела запроса)
 app.use(express.json());
 
+// подключаем логгер запросов
+app.use(requestLogger);
+
 app.post('/signin', loginJoiValidation, login);
 app.post('/signup', createUserJoiValidation, createUser);
 
@@ -37,6 +42,9 @@ app.use('/cards', cardsRouter);
 app.use('*', (req, res, next) => {
   next(new NotFoundError('Ресурс не найден. Проверьте правильность введенного URL.'));
 });
+
+// подключаем логгер ошибок
+app.use(errorLogger);
 
 app.use(errors());
 
