@@ -2,19 +2,22 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { errors } = require('celebrate');
-const auth = require('./middlewares/auth');
+const NotFoundError = require('./errors/NotFoundError');
 
+const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { createUserJoiValidation, loginJoiValidation } = require('./middlewares/JoiValidator');
 
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
+
 const { createUser, login } = require('./controllers/users');
+
 const { PORT } = require('./utils/env');
-const NotFoundError = require('./errors/NotFoundError');
 const { INTERNAL_SERVER_ERROR } = require('./utils/ServerResponseStatuses');
-const { createUserJoiValidation, loginJoiValidation } = require('./middlewares/JoiValidator');
 
 const app = express();
 
