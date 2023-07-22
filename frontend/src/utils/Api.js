@@ -1,4 +1,4 @@
-import { baseCohortUrl, myToken } from "./constants";
+// import { baseCohortUrl, myToken } from "./constants";
 
 class Api {
 	constructor(config) {
@@ -89,11 +89,12 @@ class Api {
 };
 
 const api = new Api({
-	url: baseCohortUrl,
+	// url: baseCohortUrl,
+	url: 'http://localhost:3004',
 	// url: "https://api.giga-mesto.nomoredomains.xyz", или ссылкан на константу
 	headers: {
-		authorization: myToken,
-		// 'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+		// authorization: myToken,
+		'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
 		'Content-Type': 'application/json'
 	}
 });

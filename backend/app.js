@@ -5,6 +5,7 @@ const helmet = require('helmet');
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { errors } = require('celebrate');
+const cors = require('cors');
 const NotFoundError = require('./errors/NotFoundError');
 
 const auth = require('./middlewares/auth');
@@ -26,6 +27,15 @@ const app = express();
 app.use(helmet());
 
 // app.use(cors);
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:3004',
+    'https://giga-mesto.nomoredomains.xyz',
+    'http://giga-mesto.nomoredomains.xyz',
+  ],
+  credentials: true,
+}));
 
 // app.use(cookieParser());
 
