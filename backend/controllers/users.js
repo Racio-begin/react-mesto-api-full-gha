@@ -151,10 +151,10 @@ const login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       res.send({ token });
-      res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-      });
+      // res.cookie('jwt', token, {
+      //   maxAge: 3600000 * 24 * 7,
+      //   httpOnly: true,
+      // });
     })
     .catch(next);
 };

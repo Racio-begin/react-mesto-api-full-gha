@@ -1,13 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { errors } = require('celebrate');
 const NotFoundError = require('./errors/NotFoundError');
 
 const auth = require('./middlewares/auth');
+// const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUserJoiValidation, loginJoiValidation } = require('./middlewares/JoiValidator');
 
@@ -24,7 +25,9 @@ const app = express();
 // защитить приложение от веб-уязвимостей
 app.use(helmet());
 
-app.use(cookieParser());
+// app.use(cors);
+
+// app.use(cookieParser());
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 

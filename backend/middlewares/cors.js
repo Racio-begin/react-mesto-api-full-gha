@@ -4,14 +4,17 @@ const allowedCors = [
   'http://giga-mesto.nomoredomains.xyz',
   'https://api.giga-mesto.nomoredomains.xyz',
   'https://giga-mesto.nomoredomains.xyz',
-  'http://praktikum.tk',
-  'localhost:3000',
-  'localhost:3004',
+  'http://localhost:3000',
+  // 'http://localhost:3000/react-mesto-auth',
+  // 'http://localhost:3000/react-mesto-auth/',
+  'http://localhost:3004',
+  // 'http://localhost:3004/users/me',
+  // 'http://localhost:3000/users/me',
+  // 'http://localhost:3000/react-mesto-auth/sign-in',
 ];
 
 const cors = (req, res, next) => {
   const { origin } = req.headers;
-
   // Сохраняем тип запроса (HTTP-метод) в соответствующую переменную
   const { method } = req;
 
@@ -31,7 +34,7 @@ const cors = (req, res, next) => {
     // разрешаем кросс-доменные запросы любых типов (по умолчанию)
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
     res.header('Access-Control-Allow-Headers', requestHeaders);
-    res.sendStatus(200);
+    // res.sendStatus(200);
 
     // завершаем обработку запроса и возвращаем результат клиенту
     return res.end();
