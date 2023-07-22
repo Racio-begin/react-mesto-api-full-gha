@@ -1,0 +1,10 @@
+.button_inactive {
+  background: #fff;
+  border: 1px solid #c5c5c5;
+  color: #c5c5c5;
+  border-radius: 2px;
+}
+
+.button_inactive:hover {
+  cursor: default;
+}

@@ -1,0 +1,11 @@
+.element__likes-container {
+	display: flex;
+	flex-direction: column;
+	/* max-width: 22px; */
+	/* max-height: 35px; */
+	width: 22px;
+	height: 35px;
+	/* row-gap: 1px; */
+	align-items: center;
+	justify-content: space-between;
+}

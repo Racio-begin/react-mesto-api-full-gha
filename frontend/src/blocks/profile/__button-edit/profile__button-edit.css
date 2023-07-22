@@ -1,0 +1,25 @@
+.profile__button-edit {
+  width: 24px;
+  height: 24px;
+  background-image: url(../../../images/icons/profile-btn-edit.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10px 10px;
+  border: 1px solid #fff;
+  transform: translateY(15px);
+}
+
+@media screen and (max-width: 1070px) {
+  .profile__button-edit {
+    width: 18px;
+    height: 18px;
+    background-size: 7.5px 7.5px;
+    transform: translateX(-25px);
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .profile__button-edit {
+    transform: translateX(-15px);
+  }
+}
