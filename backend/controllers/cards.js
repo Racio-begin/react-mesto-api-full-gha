@@ -28,7 +28,8 @@ const createCard = (req, res, next) => {
 
 const getAllCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => { res.send({ data: cards }); })
+    // .then((cards) => { res.send({ data: cards }); })
+    .then((cards) => res.send(cards))
     .catch(next);
 };
 
@@ -46,7 +47,8 @@ const deleteCard = (req, res, next) => {
         return next(new ForbiddenError('Невозможно удаленить чужую карточку.'));
       }
       Card.findByIdAndRemove(cardId)
-        .then(() => res.send({ data: card }))
+        // .then(() => res.send({ data: card }))
+        .then(() => res.send(card))
         .catch((err) => {
           if (err.name === 'CastError') {
             return next(new BadRequestError('Переданы некорректные данные при удалении карточки.'));
