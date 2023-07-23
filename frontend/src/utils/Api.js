@@ -88,13 +88,12 @@ class Api {
 
 };
 
+const token = localStorage.getItem("jwt");
+
 const api = new Api({
-	// url: baseCohortUrl,
 	url: 'http://localhost:3004',
-	// url: "https://api.giga-mesto.nomoredomains.xyz", или ссылкан на константу
 	headers: {
-		// authorization: myToken,
-		'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+		'Authorization': `Bearer ${token}`,
 		'Content-Type': 'application/json'
 	}
 });
