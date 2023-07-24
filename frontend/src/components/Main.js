@@ -10,8 +10,6 @@ function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onC
 
 	const currentUser = useContext(CurrentUserContext);
 
-	// const cardsArray = Object.values(cards);
-
 	return (
 		<>
 			<main className="content">
@@ -50,8 +48,7 @@ function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onC
 
 				<section className="elements">
 					<ul className="elements__content">
-						{cards?.map((card) => (
-						/* {cardsArray.map((card) => ( */
+						{cards.map((card) => (
 							<Card
 								key={card._id}
 								card={card}
