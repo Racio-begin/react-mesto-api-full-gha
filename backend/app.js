@@ -5,6 +5,7 @@ const helmet = require('helmet');
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { errors } = require('celebrate');
+// eslint-disable-next-line import/no-unresolved
 const cors = require('cors');
 const NotFoundError = require('./errors/NotFoundError');
 
