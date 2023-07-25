@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 
@@ -52,12 +53,14 @@ function App() {
 		api.getUserData()
 			.then((userData) => setCurrentUser(userData))
 			.catch(() => console.error(`Получение данных пользователя, App`))
+			console.log(userData);
 	}, []);
 
 	useEffect(() => {
 		api.getInitialCards()
 			.then((cards) => setCards(cards))
 			.catch(() => console.error(`Получение карточек, App`))
+			console.log(cards);
 	}, []);
 
 	useEffect(() => {
@@ -92,6 +95,7 @@ function App() {
 			.then(closeAllPopups)
 			.catch(() => console.error(`Обновление данных профиля, App`))
 			.finally(() => setIsLoading(false))
+			console.log(userData);
 	};
 
 	function handleUpdateAvatar(userData) {
@@ -101,6 +105,7 @@ function App() {
 			.then(closeAllPopups)
 			.catch(() => console.error(`Обновление аватара профиля, App`))
 			.finally(() => setIsLoading(false))
+			console.log(userData);
 	};
 
 	function closeAllPopups() {
@@ -117,6 +122,8 @@ function App() {
 		// const isLiked = card.likes.some(i => i._id === currentUser._id);
 		// const isLiked = card.likes.some((i) => i === currentUser._id);
 		const isLiked = card.likes.some((i) => i === currentUser.data._id);
+		console.log(card);
+		console.log(isLiked);
 
 
 		// Отправляем запрос в API и получаем обновлённые данные карточки
@@ -125,6 +132,8 @@ function App() {
 				setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
 			})
 			.catch(() => console.error(`Получение данных по лайкам, App`))
+			console.log(card._id);
+			console.log(isLiked);
 	};
 
 	function handleDeletePlaceSubmit(card) {

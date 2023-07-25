@@ -92,6 +92,7 @@ const getUserInfo = (req, res, next) => {
         return next(new NotFoundError('Такого пользователя не существует.'));
       }
       res.send({ data: user });
+      // res.send({ user });
     })
     .catch(next);
 };
@@ -137,6 +138,13 @@ const updateAvatar = (req, res, next) => {
       }
       return next(err);
     });
+  // eslint-disable-next-line no-undef
+  console.log(data);
+  // eslint-disable-next-line no-undef
+  console.log(user);
+  // eslint-disable-next-line no-undef
+  console.log({ data: user });
+  console.log(userId);
 };
 
 // АВТОРИЗАЦИЯ ПОЛЬЗОВАТЕЛЯ //
