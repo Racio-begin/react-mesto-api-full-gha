@@ -207,11 +207,13 @@ function App() {
 		if (jwt) {
 			Auth.checkToken(jwt)
 				.then((res) => {
-					if (!res.data) {
+					// if (!res.data) {
+						if (!res) {
 						return
 					};
 
-					setUserData({ email: res.data.email })
+					// setUserData({ email: res.data.email })
+					setUserData({ email: res.email })
 					setLoggedIn(true)
 					navigate('/mesto');
 					// setIsLoading(true);

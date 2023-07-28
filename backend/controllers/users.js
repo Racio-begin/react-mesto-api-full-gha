@@ -61,7 +61,7 @@ const createUser = (req, res, next) => {
 const getAllUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
-      res.send({ data: users });
+      res.send(users);
     })
     .catch(next);
 };
@@ -73,7 +73,6 @@ const getUser = (req, res, next) => {
     .then((user) => {
       if (!user) {
         throw new NotFoundError('Пользователь по указанному _id не найден.');
-        // } else res.status(OK_STATUS).send({ data: user });
       } else res.status(OK_STATUS).send(user);
     })
     .catch((err) => {
@@ -93,8 +92,9 @@ const getUserInfo = (req, res, next) => {
       if (!user) {
         return next(new NotFoundError('Такого пользователя не существует.'));
       }
-      res.send({ data: user });
-      // res.send(user);
+      // res.send({ data: user });
+      res.status(OK_STATUS).send(user);
+      console.log(user, 'Пользователь запрошен');
       // res.send({ user });
     })
     .catch(next);
@@ -112,7 +112,8 @@ const updateUser = (req, res, next) => {
     runValidators: true,
   })
     .then((user) => {
-      res.send({ data: user });
+      // res.send({ data: user });
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -126,6 +127,7 @@ const updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   const userId = req.user._id;
 
+  // User.findByIdAndUpdate(userId, { avatar: req.body.avatar }, {
   User.findByIdAndUpdate(userId, { avatar }, {
     // обработчик then получит на вход обновлённую запись
     new: true,
@@ -133,7 +135,7 @@ const updateAvatar = (req, res, next) => {
     runValidators: true,
   })
     .then((user) => {
-      res.send({ data: user });
+      res.send(user);
       // УБРАТЬ ДАТУ НАХРЕН, но проверить, что везде не отвалится
     })
     .catch((err) => {
@@ -155,18 +157,23 @@ const login = (req, res, next) => {
         SECRET_KEY,
         { expiresIn: '7d' },
       );
-      res.send({ token, userData: { data: user } });
+      // res.send({ token, userData: { data: user } });
       // res.send({ token, user });
+      res.send({ token, userData: { user } });
     })
     .catch(next);
 };
 
 const logout = (req, res) => {
   req.session.destroy(() => {
-    // res.redirect('/signin');
-    res.send('Оу');
+    res.send({ message: 'Выход пользователя' });
   });
 };
+
+// если куки
+// const logout = (req, res) => {
+//   res.clearCookie('jwt').send({ message: 'Выход пользователя' });
+// };
 
 module.exports = {
   createUser,
