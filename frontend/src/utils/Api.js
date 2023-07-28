@@ -4,6 +4,7 @@ class Api {
 	constructor(config) {
 		this._url = config.url;
 		this._headers = config.headers;
+		this._token = config.token;
 	};
 
 	_request(urlEndpoint, options) {
@@ -93,6 +94,11 @@ class Api {
 			'Content-Type': 'application/json'
 		};
 	};
+
+	// setToken(token) {
+	// 	this.token = token;
+	// 	this.headers.authorization = `Bearer ${token}`;
+	// };
 
 };
 

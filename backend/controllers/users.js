@@ -151,7 +151,8 @@ const login = (req, res, next) => {
         SECRET_KEY,
         { expiresIn: '7d' },
       );
-      res.send({ token, userData: { user } });
+      // res.send({ token, userData: { user } });
+      res.send({ token, user });
     })
     .catch(next);
 };

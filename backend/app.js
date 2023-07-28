@@ -25,9 +25,6 @@ const { INTERNAL_SERVER_ERROR } = require('./utils/ServerResponseStatuses');
 
 const app = express();
 
-// защитить приложение от веб-уязвимостей
-app.use(helmet());
-
 // app.use(cors);
 app.use(cors({
   origin: [
@@ -39,6 +36,9 @@ app.use(cors({
   ],
   credentials: true,
 }));
+
+// защитить приложение от веб-уязвимостей
+app.use(helmet());
 
 // app.use(cookieParser());
 

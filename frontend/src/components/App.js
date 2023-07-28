@@ -42,7 +42,7 @@ function App() {
 
 	const [loggedIn, setLoggedIn] = useState(false);
 
-	const [userData, setUserData] = useState({ email: '', password: '' });
+	const [userData, setUserData] = useState({ email: "", password: "" });
 	// const [userData, setUserData] = useState({}); проверка - если объект пуст
 
 	const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
@@ -50,27 +50,40 @@ function App() {
 
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		const token = localStorage.getItem("jwt");
-		if (token && !userData.email) {
-			api.getUserData()
-				.then((userData) => setCurrentUser(userData))
-				.catch(() => console.error(`Получение данных пользователя, App`))
-		}
-	}, [userData]);
-
-	useEffect(() => {
-		const token = localStorage.getItem("jwt");
-		if (token) {
-			api.getInitialCards()
-				.then((cards) => setCards(cards))
-				.catch(() => console.error(`Получение карточек, App`))
-		}
-	}, [userData]);
+	const token = localStorage.getItem("jwt");
 
 	useEffect(() => {
 		handleCheckToken();
-	}, []);
+		}, [token]);
+	// }, []);
+
+	useEffect(() => {
+		loggedIn &&
+			Promise.all([api.getUserData(), api.getInitialCards()])
+				.then(([userData, cards]) => {
+					setCurrentUser(userData);
+					setCards(cards);
+				})
+				.catch(() => console.error(`Получение информации профиля, App`))
+	}, [loggedIn]);
+
+	// useEffect(() => {
+	// 	if (token && !userData.email) {
+	// 		api.getUserData()
+	// 			.then((userData) => setCurrentUser(userData))
+	// 			.catch(() => console.error(`Получение данных пользователя, App`))
+	// 	}
+	// 	// }, [userData]);
+	// }, []);
+
+	// useEffect(() => {
+	// 	if (token) {
+	// 		api.getInitialCards()
+	// 			.then((cards) => setCards(cards))
+	// 			.catch(() => console.error(`Получение карточек, App`))
+	// 	}
+	// 	// }, [userData]);
+	// }, []);
 
 	function handleEditAvatarClick() {
 		setEditAvatarPopupOpened(true)
@@ -159,9 +172,9 @@ function App() {
 			.then((data) => {
 				localStorage.setItem('jwt', data.token);
 				api.setToken(data.token);
-				setUserData({ email, password });
 				setLoggedIn(true);
-				setCurrentUser(userData);
+				setUserData({ email, password });
+				// setCurrentUser(userData);
 				navigate('/mesto');
 			})
 			.catch(() => {
@@ -196,26 +209,24 @@ function App() {
 	};
 
 	const handleCheckToken = () => {
-		const jwt = localStorage.getItem('jwt');
-
-		if (jwt) {
-			Auth.checkToken(jwt)
+		if (token) {
+			Auth.checkToken(token)
 				.then((res) => {
-						if (!res) {
+					if (!res) {
 						return
 					};
 
-					setUserData({ email: res.email })
-					setLoggedIn(true)
-					navigate('/mesto');
-					// setIsLoading(true);
-					// todo: не отображается во время проверки токена
+					setLoggedIn(true);
+					api.setToken(token);
+					setUserData({ email: res.email });
+					// setUserData(res.email);
+					// navigate('/mesto');
+					navigate("/mesto", { replace: true });
 				})
 				.catch(() => {
 					setLoggedIn(false)
 					console.error(`Проверить jwt-токен на валидность, App`);
 				})
-			// .finally(() => setIsLoading(false));
 		};
 
 	};
