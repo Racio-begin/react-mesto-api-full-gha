@@ -10,8 +10,8 @@
 
 ## Ссылки на проект
 
-IP-адрес: 158.160.111.27
+IP 158.160.111.27
 
-Frontend: http://giga-mesto.nomoredomains.xyz/
+Frontend http://giga-mesto.nomoredomains.xyz/
 
-Backend: http://api.giga-mesto.nomoredomains.xyz/
+Backend http://api.giga-mesto.nomoredomains.xyz/
