@@ -8,12 +8,12 @@ import defaultUserAvatar from '../images/render_loading.gif';
 
 function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete }) {
 
-	// const currentUser = useContext(CurrentUserContext);
-	let currentUser = useContext(CurrentUserContext);
+	const currentUser = useContext(CurrentUserContext);
+	// let currentUser = useContext(CurrentUserContext);
 
-	if (currentUser) {
-		currentUser = currentUser.data;
-	}
+	// if (currentUser) {
+	// 	currentUser = currentUser.data;
+	// }
 
 	return (
 		<>
@@ -26,20 +26,20 @@ function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onC
 							className="button profile__button-avatar-edit" type="button">
 							<img
 								className="profile__avatar"
-								src={currentUser.avatar ?? defaultUserAvatar}
+								src={currentUser.data.avatar ?? defaultUserAvatar}
 								alt="Фотография пользователя"
 							/>
 						</button>
 
 						<div className="profile__info">
-							<h1 className="profile__username">{currentUser.name}</h1>
+							<h1 className="profile__username">{currentUser.data.name}</h1>
 							<button
 								onClick={onEditProfile}
 								className="profile__button-edit button"
 								type="button"
 								aria-label="Редактировать информацию в профиле"
 							/>
-							<p className="profile__description">{currentUser.about}</p>
+							<p className="profile__description">{currentUser.data.about}</p>
 						</div>
 					</div>
 

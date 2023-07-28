@@ -73,7 +73,8 @@ const getUser = (req, res, next) => {
     .then((user) => {
       if (!user) {
         throw new NotFoundError('Пользователь по указанному _id не найден.');
-      } else res.status(OK_STATUS).send({ data: user });
+        // } else res.status(OK_STATUS).send({ data: user });
+      } else res.status(OK_STATUS).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -83,6 +84,7 @@ const getUser = (req, res, next) => {
     });
 };
 
+// Тут отваливается пользователь при ребуте
 const getUserInfo = (req, res, next) => {
   const userId = req.user._id;
   User.findById(userId)
@@ -92,6 +94,7 @@ const getUserInfo = (req, res, next) => {
         return next(new NotFoundError('Такого пользователя не существует.'));
       }
       res.send({ data: user });
+      // res.send(user);
       // res.send({ user });
     })
     .catch(next);
@@ -153,6 +156,7 @@ const login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       res.send({ token, userData: { data: user } });
+      // res.send({ token, user });
     })
     .catch(next);
 };
