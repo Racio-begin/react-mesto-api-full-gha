@@ -98,7 +98,7 @@ class Api {
 const token = localStorage.getItem("jwt");
 
 const api = new Api({
-	url: 'http://localhost:3004',
+	url: 'http://localhost:3000',
 	headers: {
 		'Authorization': `Bearer ${token}`,
 		'Content-Type': 'application/json'

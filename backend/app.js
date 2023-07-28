@@ -32,6 +32,7 @@ app.use(helmet());
 app.use(cors({
   origin: [
     'http://localhost:3000',
+    'http://localhost:3001',
     'http://localhost:3004',
     'https://giga-mesto.nomoredomains.xyz',
     'http://giga-mesto.nomoredomains.xyz',
