@@ -131,6 +131,7 @@ const updateAvatar = (req, res, next) => {
   })
     .then((user) => {
       res.send({ data: user });
+      // УБРАТЬ ДАТУ НАХРЕН, но проверить, что везде не отвалится
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -138,13 +139,6 @@ const updateAvatar = (req, res, next) => {
       }
       return next(err);
     });
-  // eslint-disable-next-line no-undef
-  console.log(data);
-  // eslint-disable-next-line no-undef
-  console.log(user);
-  // eslint-disable-next-line no-undef
-  console.log({ data: user });
-  console.log(userId);
 };
 
 // АВТОРИЗАЦИЯ ПОЛЬЗОВАТЕЛЯ //
@@ -158,13 +152,16 @@ const login = (req, res, next) => {
         SECRET_KEY,
         { expiresIn: '7d' },
       );
-      res.send({ token });
-      // res.cookie('jwt', token, {
-      //   maxAge: 3600000 * 24 * 7,
-      //   httpOnly: true,
-      // });
+      res.send({ token, userData: { data: user } });
     })
     .catch(next);
+};
+
+const logout = (req, res) => {
+  req.session.destroy(() => {
+    // res.redirect('/signin');
+    res.send('Оу');
+  });
 };
 
 module.exports = {
@@ -175,4 +172,5 @@ module.exports = {
   updateUser,
   updateAvatar,
   login,
+  logout,
 };

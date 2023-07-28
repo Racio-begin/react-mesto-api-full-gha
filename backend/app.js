@@ -17,10 +17,11 @@ const { createUserJoiValidation, loginJoiValidation } = require('./middlewares/J
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 
-const { createUser, login } = require('./controllers/users');
+const { createUser, login, logout } = require('./controllers/users');
 
 const { PORT } = require('./utils/env');
 const { INTERNAL_SERVER_ERROR } = require('./utils/ServerResponseStatuses');
+// const { logout } = require('../frontend/src/utils/Auth');
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use(requestLogger);
 
 app.post('/signin', loginJoiValidation, login);
 app.post('/signup', createUserJoiValidation, createUser);
+app.post('/signout', logout);
 
 app.use(auth);
 

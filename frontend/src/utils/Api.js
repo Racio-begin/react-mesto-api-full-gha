@@ -86,6 +86,13 @@ class Api {
 		})
 	};
 
+	setToken(token) {
+		this._headers = {
+			'Authorization': `Bearer ${token}`,
+			'Content-Type': 'application/json'
+		};
+	};
+
 };
 
 const token = localStorage.getItem("jwt");

@@ -31,6 +31,17 @@ export function login({ email, password }) {
 		.then((res) => getResponseData(res));
 };
 
+export function logout() {
+	return fetch(`${BASE_URL}/signout`, {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		}
+	})
+		.then((res) => getResponseData(res));
+}
+
 export function checkToken(jwt) {
 	return fetch(`${BASE_URL}/users/me`, {
 		method: 'GET',

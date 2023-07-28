@@ -8,6 +8,12 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 
 	const currentUser = useContext(CurrentUserContext);
 
+	// let currentUser = useContext(CurrentUserContext);
+
+	// if (currentUser) {
+	// 	currentUser = currentUser.data;
+	// }
+
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
 

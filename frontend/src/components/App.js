@@ -43,6 +43,7 @@ function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	const [userData, setUserData] = useState({ email: '', password: '' });
+	// const [userData, setUserData] = useState({}); проверка - если объект пуст
 
 	const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
 	const [successInfoTooltip, setSuccessInfoTooltip] = useState({ image: "", text: "" });
@@ -50,18 +51,22 @@ function App() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		api.getUserData()
-			.then((userData) => setCurrentUser(userData))
-			.catch(() => console.error(`Получение данных пользователя, App`))
-			console.log(userData);
-	}, []);
+		const token = localStorage.getItem("jwt");
+		if (token && !userData.email) {
+			api.getUserData()
+				.then((userData) => setCurrentUser(userData))
+				.catch(() => console.error(`Получение данных пользователя, App`))
+		}
+	}, [userData]);
 
 	useEffect(() => {
-		api.getInitialCards()
-			.then((cards) => setCards(cards))
-			.catch(() => console.error(`Получение карточек, App`))
-			console.log(cards);
-	}, []);
+		const token = localStorage.getItem("jwt");
+		if (token) {
+			api.getInitialCards()
+				.then((cards) => setCards(cards))
+				.catch(() => console.error(`Получение карточек, App`))
+		}
+	}, [userData]);
 
 	useEffect(() => {
 		handleCheckToken();
@@ -95,7 +100,7 @@ function App() {
 			.then(closeAllPopups)
 			.catch(() => console.error(`Обновление данных профиля, App`))
 			.finally(() => setIsLoading(false))
-			console.log(userData);
+		console.log(userData);
 	};
 
 	function handleUpdateAvatar(userData) {
@@ -105,7 +110,7 @@ function App() {
 			.then(closeAllPopups)
 			.catch(() => console.error(`Обновление аватара профиля, App`))
 			.finally(() => setIsLoading(false))
-			console.log(userData);
+		console.log(userData);
 	};
 
 	function closeAllPopups() {
@@ -125,15 +130,14 @@ function App() {
 		console.log(card);
 		console.log(isLiked);
 
-
 		// Отправляем запрос в API и получаем обновлённые данные карточки
 		api.changeLikeCardStatus(card._id, !isLiked)
 			.then((newCard) => {
 				setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
 			})
 			.catch(() => console.error(`Получение данных по лайкам, App`))
-			console.log(card._id);
-			console.log(isLiked);
+		console.log(card._id);
+		console.log(isLiked);
 	};
 
 	function handleDeletePlaceSubmit(card) {
@@ -159,10 +163,12 @@ function App() {
 		const { email, password } = userData;
 		Auth.login({ email, password })
 			.then((data) => {
-				localStorage.setItem('jwt', data.token)
+				localStorage.setItem('jwt', data.token);
+				api.setToken(data.token);
 				setUserData({ email, password });
-				setLoggedIn(true)
-				navigate('/mesto')
+				setLoggedIn(true);
+				setCurrentUser(data.userData);
+				navigate('/mesto');
 			})
 			.catch(() => {
 				setIsInfoTooltipOpen(true);
@@ -170,7 +176,7 @@ function App() {
 					image: false,
 					text: "Что-то пошло не так! Попробуйте ещё раз."
 				});
-				console.error(`Войти в аккаунт, App`)
+				console.error(`Войти в аккаунт, App`);
 			})
 	};
 
@@ -215,7 +221,7 @@ function App() {
 					setLoggedIn(false)
 					console.error(`Проверить jwt-токен на валидность, App`);
 				})
-				// .finally(() => setIsLoading(false));
+			// .finally(() => setIsLoading(false));
 		};
 
 	};

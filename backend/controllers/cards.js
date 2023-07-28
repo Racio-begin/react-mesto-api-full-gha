@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 // eslint-disable-next-line no-unused-vars
 const Card = require('../models/card');
 
@@ -9,6 +10,7 @@ const {
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
+// const card = require('../models/card');
 
 const createCard = (req, res, next) => {
   const { name, link } = req.body;
@@ -68,6 +70,9 @@ const likeCard = (req, res, next) => {
   const { cardId } = req.params;
   const userId = req.user._id;
 
+  // console.log(cardId);
+  // console.log(userId);
+
   Card.findByIdAndUpdate(
     cardId,
     { $addToSet: { likes: userId } }, // добавить _id в массив, если его там нет
@@ -89,11 +94,15 @@ const likeCard = (req, res, next) => {
       }
       return next(err);
     });
+  // console.log(card);
 };
 
 const dislikeCard = (req, res, next) => {
   const { cardId } = req.params;
   const userId = req.user._id;
+
+  // console.log(cardId);
+  // console.log(userId);
 
   Card.findByIdAndUpdate(
     cardId,

@@ -8,7 +8,12 @@ import defaultUserAvatar from '../images/render_loading.gif';
 
 function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete }) {
 
-	const currentUser = useContext(CurrentUserContext);
+	// const currentUser = useContext(CurrentUserContext);
+	let currentUser = useContext(CurrentUserContext);
+
+	if (currentUser) {
+		currentUser = currentUser.data;
+	}
 
 	return (
 		<>
