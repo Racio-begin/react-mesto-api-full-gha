@@ -83,7 +83,6 @@ const getUser = (req, res, next) => {
     });
 };
 
-// Тут отваливается пользователь при ребуте
 const getUserInfo = (req, res, next) => {
   const userId = req.user._id;
   User.findById(userId)
@@ -92,10 +91,8 @@ const getUserInfo = (req, res, next) => {
       if (!user) {
         return next(new NotFoundError('Такого пользователя не существует.'));
       }
-      // res.send({ data: user });
       res.status(OK_STATUS).send(user);
-      console.log(user, 'Пользователь запрошен');
-      // res.send({ user });
+      console.log(user, 'Пользователь успешно запрошен');
     })
     .catch(next);
 };
@@ -112,7 +109,6 @@ const updateUser = (req, res, next) => {
     runValidators: true,
   })
     .then((user) => {
-      // res.send({ data: user });
       res.send(user);
     })
     .catch((err) => {
@@ -127,7 +123,6 @@ const updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   const userId = req.user._id;
 
-  // User.findByIdAndUpdate(userId, { avatar: req.body.avatar }, {
   User.findByIdAndUpdate(userId, { avatar }, {
     // обработчик then получит на вход обновлённую запись
     new: true,
@@ -136,7 +131,6 @@ const updateAvatar = (req, res, next) => {
   })
     .then((user) => {
       res.send(user);
-      // УБРАТЬ ДАТУ НАХРЕН, но проверить, что везде не отвалится
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -157,8 +151,6 @@ const login = (req, res, next) => {
         SECRET_KEY,
         { expiresIn: '7d' },
       );
-      // res.send({ token, userData: { data: user } });
-      // res.send({ token, user });
       res.send({ token, userData: { user } });
     })
     .catch(next);

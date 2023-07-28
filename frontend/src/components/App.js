@@ -124,11 +124,7 @@ function App() {
 
 	function handleCardLike(card) {
 		// Проверяем, есть ли уже лайк на этой карточке
-		// const isLiked = card.likes.some(i => i._id === currentUser._id);
-		// const isLiked = card.likes.some((i) => i === currentUser._id);
-		const isLiked = card.likes.some((i) => i === currentUser.data._id);
-		console.log(card);
-		console.log(isLiked);
+		const isLiked = card.likes.some((i) => i === currentUser._id);
 
 		// Отправляем запрос в API и получаем обновлённые данные карточки
 		api.changeLikeCardStatus(card._id, !isLiked)
@@ -136,8 +132,6 @@ function App() {
 				setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
 			})
 			.catch(() => console.error(`Получение данных по лайкам, App`))
-		console.log(card._id);
-		console.log(isLiked);
 	};
 
 	function handleDeletePlaceSubmit(card) {
@@ -167,7 +161,7 @@ function App() {
 				api.setToken(data.token);
 				setUserData({ email, password });
 				setLoggedIn(true);
-				setCurrentUser(data.userData);
+				setCurrentUser(userData);
 				navigate('/mesto');
 			})
 			.catch(() => {
@@ -207,12 +201,10 @@ function App() {
 		if (jwt) {
 			Auth.checkToken(jwt)
 				.then((res) => {
-					// if (!res.data) {
 						if (!res) {
 						return
 					};
 
-					// setUserData({ email: res.data.email })
 					setUserData({ email: res.email })
 					setLoggedIn(true)
 					navigate('/mesto');

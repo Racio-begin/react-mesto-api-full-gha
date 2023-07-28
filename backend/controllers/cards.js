@@ -1,5 +1,3 @@
-/* eslint-disable no-shadow */
-// eslint-disable-next-line no-unused-vars
 const Card = require('../models/card');
 
 const {
@@ -10,7 +8,6 @@ const {
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
-// const card = require('../models/card');
 
 const createCard = (req, res, next) => {
   const { name, link } = req.body;
@@ -30,7 +27,6 @@ const createCard = (req, res, next) => {
 
 const getAllCards = (req, res, next) => {
   Card.find({})
-    // .then((cards) => { res.send({ data: cards }); })
     .then((cards) => res.send(cards))
     .catch(next);
 };
@@ -49,7 +45,6 @@ const deleteCard = (req, res, next) => {
         return next(new ForbiddenError('Невозможно удаленить чужую карточку.'));
       }
       Card.findByIdAndRemove(cardId)
-        // .then(() => res.send({ data: card }))
         .then(() => res.send(card))
         .catch((err) => {
           if (err.name === 'CastError') {
@@ -70,9 +65,6 @@ const likeCard = (req, res, next) => {
   const { cardId } = req.params;
   const userId = req.user._id;
 
-  // console.log(cardId);
-  // console.log(userId);
-
   Card.findByIdAndUpdate(
     cardId,
     { $addToSet: { likes: userId } }, // добавить _id в массив, если его там нет
@@ -83,7 +75,6 @@ const likeCard = (req, res, next) => {
   )
     .then((card) => {
       if (card) {
-        // return res.status(OK_STATUS).send({ data: card });
         return res.status(OK_STATUS).send(card);
       }
       return next(new NotFoundError('Запрашиваемая карточка не найдена.'));
@@ -94,15 +85,11 @@ const likeCard = (req, res, next) => {
       }
       return next(err);
     });
-  // console.log(card);
 };
 
 const dislikeCard = (req, res, next) => {
   const { cardId } = req.params;
   const userId = req.user._id;
-
-  // console.log(cardId);
-  // console.log(userId);
 
   Card.findByIdAndUpdate(
     cardId,
@@ -114,7 +101,6 @@ const dislikeCard = (req, res, next) => {
   )
     .then((card) => {
       if (card) {
-        // return res.send({ data: card });
         return res.send(card);
       }
       return next(new NotFoundError('Запрашиваемая карточка не найдена.'));
