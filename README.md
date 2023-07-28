@@ -14,4 +14,4 @@ IP-адрес: 158.160.111.27
 
 Frontend: http://giga-mesto.nomoredomains.xyz/
 
-Backend: https://....
+Backend: http://api.giga-mesto.nomoredomains.xyz/
