@@ -163,11 +163,6 @@ const logout = (req, res) => {
   });
 };
 
-// если куки
-// const logout = (req, res) => {
-//   res.clearCookie('jwt').send({ message: 'Выход пользователя' });
-// };
-
 module.exports = {
   createUser,
   getAllUsers,

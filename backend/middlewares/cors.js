@@ -5,12 +5,7 @@ const allowedCors = [
   'https://api.giga-mesto.nomoredomains.xyz',
   'https://giga-mesto.nomoredomains.xyz',
   'http://localhost:3000',
-  // 'http://localhost:3000/react-mesto-auth',
-  // 'http://localhost:3000/react-mesto-auth/',
   'http://localhost:3004',
-  // 'http://localhost:3004/users/me',
-  // 'http://localhost:3000/users/me',
-  // 'http://localhost:3000/react-mesto-auth/sign-in',
 ];
 
 const cors = (req, res, next) => {

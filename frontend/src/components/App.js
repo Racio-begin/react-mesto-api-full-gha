@@ -43,7 +43,6 @@ function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	const [userData, setUserData] = useState({ email: "", password: "" });
-	// const [userData, setUserData] = useState({}); проверка - если объект пуст
 
 	const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
 	const [successInfoTooltip, setSuccessInfoTooltip] = useState({ image: "", text: "" });
@@ -55,7 +54,6 @@ function App() {
 	useEffect(() => {
 		handleCheckToken();
 		}, [token]);
-	// }, []);
 
 	useEffect(() => {
 		loggedIn &&
@@ -66,24 +64,6 @@ function App() {
 				})
 				.catch(() => console.error(`Получение информации профиля, App`))
 	}, [loggedIn]);
-
-	// useEffect(() => {
-	// 	if (token && !userData.email) {
-	// 		api.getUserData()
-	// 			.then((userData) => setCurrentUser(userData))
-	// 			.catch(() => console.error(`Получение данных пользователя, App`))
-	// 	}
-	// 	// }, [userData]);
-	// }, []);
-
-	// useEffect(() => {
-	// 	if (token) {
-	// 		api.getInitialCards()
-	// 			.then((cards) => setCards(cards))
-	// 			.catch(() => console.error(`Получение карточек, App`))
-	// 	}
-	// 	// }, [userData]);
-	// }, []);
 
 	function handleEditAvatarClick() {
 		setEditAvatarPopupOpened(true)
@@ -113,7 +93,6 @@ function App() {
 			.then(closeAllPopups)
 			.catch(() => console.error(`Обновление данных профиля, App`))
 			.finally(() => setIsLoading(false))
-		console.log(userData);
 	};
 
 	function handleUpdateAvatar(userData) {
@@ -123,7 +102,6 @@ function App() {
 			.then(closeAllPopups)
 			.catch(() => console.error(`Обновление аватара профиля, App`))
 			.finally(() => setIsLoading(false))
-		console.log(userData);
 	};
 
 	function closeAllPopups() {
@@ -174,7 +152,7 @@ function App() {
 				api.setToken(data.token);
 				setLoggedIn(true);
 				setUserData({ email, password });
-				// setCurrentUser(userData);
+				setCurrentUser(userData);
 				navigate('/mesto');
 			})
 			.catch(() => {

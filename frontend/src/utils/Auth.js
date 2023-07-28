@@ -48,7 +48,6 @@ export function checkToken(jwt) {
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json',
-			// 'Authorization': `Bearer ${jwt}`,
 			authorization: `Bearer ${jwt}`
 		},
 	})

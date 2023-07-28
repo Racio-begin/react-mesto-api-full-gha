@@ -95,11 +95,6 @@ class Api {
 		};
 	};
 
-	// setToken(token) {
-	// 	this.token = token;
-	// 	this.headers.authorization = `Bearer ${token}`;
-	// };
-
 };
 
 const token = localStorage.getItem("jwt");
