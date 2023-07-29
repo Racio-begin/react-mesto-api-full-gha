@@ -1,4 +1,4 @@
-// import { baseCohortUrl, myToken } from "./constants";
+import { BASE_URL } from "./constants";
 
 class Api {
 	constructor(config) {
@@ -82,7 +82,6 @@ class Api {
 			method: "PATCH",
 			headers: this._headers,
 			body: JSON.stringify({
-				// avatar: data["avatar"]
 				avatar: data.avatar
 			})
 		})
@@ -100,8 +99,7 @@ class Api {
 const token = localStorage.getItem("jwt");
 
 const api = new Api({
-	// url: 'http://localhost:3000',
-	url: "http://api.giga-mesto.nomoredomains.xyz",
+	url: BASE_URL,
 	headers: {
 		'Authorization': `Bearer ${token}`,
 		'Content-Type': 'application/json'
