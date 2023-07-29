@@ -17,7 +17,7 @@ const cardsRouter = require('./routes/cards');
 
 const { createUser, login, logout } = require('./controllers/users');
 
-const { PORT, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
 const { INTERNAL_SERVER_ERROR } = require('./utils/ServerResponseStatuses');
 
