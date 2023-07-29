@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
@@ -16,7 +18,9 @@ const cardsRouter = require('./routes/cards');
 
 const { createUser, login, logout } = require('./controllers/users');
 
-const { PORT } = require('./utils/env');
+// const { PORT } = require('./utils/env');
+const { PORT, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+
 const { INTERNAL_SERVER_ERROR } = require('./utils/ServerResponseStatuses');
 
 const app = express();
@@ -29,6 +33,8 @@ app.use(cors({
     'http://localhost:3004',
     'https://giga-mesto.nomoredomains.xyz',
     'http://giga-mesto.nomoredomains.xyz',
+    'https://api.giga-mesto.nomoredomains.xyz',
+    'http://api.giga-mesto.nomoredomains.xyz',
   ],
   credentials: true,
 }));
@@ -36,7 +42,7 @@ app.use(cors({
 // защитить приложение от веб-уязвимостей
 app.use(helmet());
 
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
+mongoose.connect(DB_URL);
 
 // применить для всех роутов встроенный в express пасчер (чтение тела запроса)
 app.use(express.json());

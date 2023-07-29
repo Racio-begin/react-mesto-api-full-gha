@@ -100,7 +100,8 @@ class Api {
 const token = localStorage.getItem("jwt");
 
 const api = new Api({
-	url: 'http://localhost:3000',
+	// url: 'http://localhost:3000',
+	url: "http://api.giga-mesto.nomoredomains.xyz",
 	headers: {
 		'Authorization': `Bearer ${token}`,
 		'Content-Type': 'application/json'
