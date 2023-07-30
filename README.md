@@ -12,6 +12,6 @@
 
 IP 158.160.111.27
 
-Frontend http://giga-mesto.nomoredomains.xyz/
+Frontend https://giga-mesto.nomoredomains.xyz/
 
-Backend http://api.giga-mesto.nomoredomains.xyz/
+Backend https://api.giga-mesto.nomoredomains.xyz/

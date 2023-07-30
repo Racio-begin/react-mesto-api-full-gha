@@ -27,11 +27,8 @@ app.use(cors({
   origin: [
     'http://localhost:3000',
     'http://localhost:3001',
-    'http://localhost:3002',
     'https://giga-mesto.nomoredomains.xyz',
     'https://api.giga-mesto.nomoredomains.xyz',
-    'http://giga-mesto.nomoredomains.xyz',
-    'http://api.giga-mesto.nomoredomains.xyz',
   ],
   credentials: true,
 }));
