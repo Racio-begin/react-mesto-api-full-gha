@@ -18,7 +18,7 @@ const { OK_STATUS, CREATED_STATUS, MONGO_DUPLICATE_KEY_ERROR } = require('../uti
 
 const SALT_ROUNDS = 10;
 
-// РЕГИСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ //
+//  РЕГИСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ  //
 const createUser = (req, res, next) => {
   // Получим из объекта запроса имя, описание и аватар пользователя
   const {
