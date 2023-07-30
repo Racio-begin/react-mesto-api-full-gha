@@ -8,7 +8,7 @@
 // export const myToken = 'c467341b-672a-48a9-be5b-ea4a89cc731a';
 
 // API-адрес для получения данных пользователя с моего сервера (локальная машина)
-export const BASE_URL = "http://localhost:3000"
+// export const BASE_URL = "http://localhost:3000"
 
 // API-адрес для получения данных пользователя с моего сервера
-// export const BASE_URL = "https://api.giga-mesto.nomoredomains.xyz"
+export const BASE_URL = "http://api.giga-mesto.nomoredomains.xyz"
