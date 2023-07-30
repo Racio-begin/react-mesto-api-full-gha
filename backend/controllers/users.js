@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 // Импортировать модель пользователя
 const User = require('../models/user');
 
-const SECRET_KEY = require('../utils/sk');
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 // Импортировать статусы ответов сервера
 const BadRequestError = require('../errors/BadRequestError');
@@ -147,7 +147,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        SECRET_KEY,
+        NODE_ENV === 'production' ? JWT_SECRET : 'four-seven-two-thousand-twenty-three-secret',
         { expiresIn: '7d' },
       );
       res.send({ token, user });
