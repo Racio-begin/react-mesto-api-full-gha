@@ -21,8 +21,6 @@ import * as Auth from '../utils/Auth';
 import Register from './Register';
 import Login from './Login';
 
-import '../index.css';
-
 function App() {
 
 	// Задаем переменные через хуки для отслеживания их состояния на странице
