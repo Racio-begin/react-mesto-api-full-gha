@@ -43,6 +43,7 @@ function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	const [userData, setUserData] = useState({ email: "", password: "" });
+	// const [userData, setUserData] = useState({}); проверка - если объект пуст
 
 	const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
 	const [successInfoTooltip, setSuccessInfoTooltip] = useState({ image: "", text: "" });
@@ -152,7 +153,6 @@ function App() {
 				api.setToken(data.token);
 				setLoggedIn(true);
 				setUserData({ email, password });
-				setCurrentUser(userData);
 				navigate('/mesto');
 			})
 			.catch(() => {
@@ -197,8 +197,6 @@ function App() {
 					setLoggedIn(true);
 					api.setToken(token);
 					setUserData({ email: res.email });
-					// setUserData(res.email);
-					// navigate('/mesto');
 					navigate("/mesto", { replace: true });
 				})
 				.catch(() => {
@@ -216,7 +214,6 @@ function App() {
 	};
 
 	return (
-		// todo: <AppContext.Provider value={{ isLoading, closeAllPopups }}>
 		<CurrentUserContext.Provider value={currentUser}>
 			<div className="page">
 
@@ -317,7 +314,6 @@ function App() {
 
 			</div>
 		</CurrentUserContext.Provider>
-		// </AppContext.Provider>
 	);
 
 };

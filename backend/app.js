@@ -3,8 +3,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
-
 const { errors } = require('celebrate');
+
 const cors = require('cors');
 const NotFoundError = require('./errors/NotFoundError');
 
@@ -17,21 +17,19 @@ const cardsRouter = require('./routes/cards');
 
 const { createUser, login, logout } = require('./controllers/users');
 
-const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
-
 const { INTERNAL_SERVER_ERROR } = require('./utils/ServerResponseStatuses');
+
+const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
 const app = express();
 
-// app.use(cors);
 app.use(cors({
   origin: [
     'http://localhost:3000',
     'http://localhost:3001',
-    'http://localhost:3004',
-    'https://giga-mesto.nomoredomains.xyz',
+    'http://localhost:3002',
+    // 'https://giga-mesto.nomoredomains.xyz',
     'http://giga-mesto.nomoredomains.xyz',
-    'https://api.giga-mesto.nomoredomains.xyz',
     'http://api.giga-mesto.nomoredomains.xyz',
   ],
   credentials: true,

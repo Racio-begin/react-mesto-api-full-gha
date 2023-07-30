@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 // Импортировать модель пользователя
 const User = require('../models/user');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const SECRET_KEY = require('../utils/sk');
 
 // Импортировать статусы ответов сервера
 const BadRequestError = require('../errors/BadRequestError');
@@ -66,7 +66,6 @@ const getAllUsers = (req, res, next) => {
     .catch(next);
 };
 
-// todo: реализовать orFail() для реализации всех ошибок в .catch
 const getUser = (req, res, next) => {
   // Вызвать метод findById, возвращает пользователя по id, если он есть
   User.findById(req.params.userId)
@@ -148,7 +147,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'four-seven-two-thousand-twenty-three-secret',
+        SECRET_KEY,
         { expiresIn: '7d' },
       );
       res.send({ token, user });

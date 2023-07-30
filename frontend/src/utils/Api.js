@@ -1,5 +1,3 @@
-import { BASE_URL } from "./constants";
-
 class Api {
 	constructor(config) {
 		this._url = config.url;
@@ -99,7 +97,7 @@ class Api {
 const token = localStorage.getItem("jwt");
 
 const api = new Api({
-	url: BASE_URL,
+	url: 'http://localhost:3000',
 	headers: {
 		'Authorization': `Bearer ${token}`,
 		'Content-Type': 'application/json'
