@@ -70,7 +70,6 @@ const likeCard = (req, res, next) => {
     { $addToSet: { likes: userId } }, // добавить _id в массив, если его там нет
     {
       new: true,
-      runValidators: true,
     },
   )
     .then((card) => {
@@ -96,7 +95,6 @@ const dislikeCard = (req, res, next) => {
     { $pull: { likes: userId } }, // убрать _id из массива
     {
       new: true,
-      runValidators: true,
     },
   )
     .then((card) => {
