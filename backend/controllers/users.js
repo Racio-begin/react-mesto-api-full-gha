@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 // Подключим модуль для хэширования пароля
 const bcrypt = require('bcryptjs');
 
@@ -48,7 +50,7 @@ const createUser = (req, res, next) => {
     })
     // в случае провала (req) приходит ошибка и отпраляется на фронт для обозначения проблемы
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err instanceof mongoose.Error.ValidationError) {
         return next(new BadRequestError('Переданы некорректные данные при создании пользователя.'));
       }
       if (err.code === MONGO_DUPLICATE_KEY_ERROR) {

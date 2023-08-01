@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Card = require('../models/card');
 
 const {
@@ -18,7 +19,7 @@ const createCard = (req, res, next) => {
       res.status(CREATED_STATUS).send(card);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err instanceof mongoose.Error.ValidationError) {
         return next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
       }
       return next(err);
