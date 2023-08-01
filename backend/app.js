@@ -11,7 +11,7 @@ const routes = require('./routes/users');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { INTERNAL_SERVER_ERROR } = require('./utils/ServerResponseStatuses');
+const errorHandler = require('./errors/errorHandler');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
@@ -46,12 +46,7 @@ app.use(routes);
 app.use(errorLogger);
 
 app.use(errors());
-
-app.use((err, req, res, next) => {
-  const { statusCode = INTERNAL_SERVER_ERROR } = err;
-  res.status(statusCode).send({ message: statusCode === INTERNAL_SERVER_ERROR ? 'Стандартная ошибка' : err.message });
-  next();
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}! :)`);
