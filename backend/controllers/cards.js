@@ -39,19 +39,14 @@ const deleteCard = (req, res, next) => {
     // eslint-disable-next-line consistent-return
     .then((card) => {
       if (!card) {
-        return next(new NotFoundError('Карточка с указанным id не найдена'));
+        return next(new NotFoundError('Карточка с указанным id не найдена.'));
       }
       if (card.owner.toString() !== userId) {
         return next(new ForbiddenError('Невозможно удаленить чужую карточку.'));
       }
       Card.deleteOne(cardId)
-        .then(() => res.send(card))
-        .catch((err) => {
-          if (err.name === 'CastError') {
-            return next(new BadRequestError('Переданы некорректные данные при удалении карточки.'));
-          }
-          return next(err);
-        });
+        .then(() => res.status(OK_STATUS).send(card))
+        .catch(next);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
