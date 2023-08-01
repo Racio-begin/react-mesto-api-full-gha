@@ -6,16 +6,10 @@ const helmet = require('helmet');
 const { errors } = require('celebrate');
 
 const cors = require('cors');
-const NotFoundError = require('./errors/NotFoundError');
 
-const auth = require('./middlewares/auth');
+const routes = require('./routes/users');
+
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { createUserJoiValidation, loginJoiValidation } = require('./middlewares/JoiValidator');
-
-const usersRouter = require('./routes/users');
-const cardsRouter = require('./routes/cards');
-
-const { createUser, login, logout } = require('./controllers/users');
 
 const { INTERNAL_SERVER_ERROR } = require('./utils/ServerResponseStatuses');
 
@@ -45,24 +39,8 @@ app.use(express.json());
 // подключаем логгер запросов
 app.use(requestLogger);
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
-
-app.post('/signin', loginJoiValidation, login);
-app.post('/signup', createUserJoiValidation, createUser);
-app.post('/signout', logout);
-
-app.use(auth);
-
-app.use('/users', usersRouter);
-app.use('/cards', cardsRouter);
-
-app.use('*', (req, res, next) => {
-  next(new NotFoundError('Ресурс не найден. Проверьте правильность введенного URL.'));
-});
+// подключаем все роуты
+app.use(routes);
 
 // подключаем логгер ошибок
 app.use(errorLogger);
