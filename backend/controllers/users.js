@@ -91,6 +91,7 @@ const getUserInfo = (req, res, next) => {
         return next(new NotFoundError('Такого пользователя не существует.'));
       }
       res.status(OK_STATUS).send(user);
+      // eslint-disable-next-line no-console
       console.log(user, 'Пользователь успешно запрошен');
     })
     .catch(next);
