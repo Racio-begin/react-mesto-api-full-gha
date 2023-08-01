@@ -6,12 +6,18 @@ const helmet = require('helmet');
 const { errors } = require('celebrate');
 
 const cors = require('cors');
+const NotFoundError = require('./errors/NotFoundError');
 
-const routes = require('./routes/users');
-
+const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { createUserJoiValidation, loginJoiValidation } = require('./middlewares/JoiValidator');
 
-const errorHandler = require('./errors/errorHandler');
+const usersRouter = require('./routes/users');
+const cardsRouter = require('./routes/cards');
+
+const { createUser, login, logout } = require('./controllers/users');
+
+const { INTERNAL_SERVER_ERROR } = require('./utils/ServerResponseStatuses');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
@@ -39,14 +45,35 @@ app.use(express.json());
 // подключаем логгер запросов
 app.use(requestLogger);
 
-// подключаем все роуты
-app.use(routes);
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
+app.post('/signin', loginJoiValidation, login);
+app.post('/signup', createUserJoiValidation, createUser);
+app.post('/signout', logout);
+
+app.use(auth);
+
+app.use('/users', usersRouter);
+app.use('/cards', cardsRouter);
+
+app.use('*', (req, res, next) => {
+  next(new NotFoundError('Ресурс не найден. Проверьте правильность введенного URL.'));
+});
 
 // подключаем логгер ошибок
 app.use(errorLogger);
 
 app.use(errors());
-app.use(errorHandler);
+
+app.use((err, req, res, next) => {
+  const { statusCode = INTERNAL_SERVER_ERROR } = err;
+  res.status(statusCode).send({ message: statusCode === INTERNAL_SERVER_ERROR ? 'Стандартная ошибка' : err.message });
+  next();
+});
 
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}! :)`);

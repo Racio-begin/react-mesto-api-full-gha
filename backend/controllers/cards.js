@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const Card = require('../models/card');
 
 const {
@@ -19,7 +18,7 @@ const createCard = (req, res, next) => {
       res.status(CREATED_STATUS).send(card);
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
+      if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
       }
       return next(err);
@@ -40,14 +39,19 @@ const deleteCard = (req, res, next) => {
     // eslint-disable-next-line consistent-return
     .then((card) => {
       if (!card) {
-        return next(new NotFoundError('Карточка с указанным id не найдена.'));
+        return next(new NotFoundError('Карточка с указанным id не найдена'));
       }
       if (card.owner.toString() !== userId) {
         return next(new ForbiddenError('Невозможно удаленить чужую карточку.'));
       }
-      Card.deleteOne(cardId)
-        .then(() => res.status(OK_STATUS).send(card))
-        .catch(next);
+      Card.findByIdAndRemove(cardId)
+        .then(() => res.send(card))
+        .catch((err) => {
+          if (err.name === 'CastError') {
+            return next(new BadRequestError('Переданы некорректные данные при удалении карточки.'));
+          }
+          return next(err);
+        });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -66,6 +70,7 @@ const likeCard = (req, res, next) => {
     { $addToSet: { likes: userId } }, // добавить _id в массив, если его там нет
     {
       new: true,
+      runValidators: true,
     },
   )
     .then((card) => {
@@ -91,6 +96,7 @@ const dislikeCard = (req, res, next) => {
     { $pull: { likes: userId } }, // убрать _id из массива
     {
       new: true,
+      runValidators: true,
     },
   )
     .then((card) => {

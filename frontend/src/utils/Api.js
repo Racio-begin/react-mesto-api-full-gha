@@ -1,3 +1,5 @@
+import { BASE_URL } from "./constants";
+
 class Api {
 	constructor(config) {
 		this._url = config.url;
@@ -97,8 +99,7 @@ class Api {
 const token = localStorage.getItem("jwt");
 
 const api = new Api({
-	// url: 'http://localhost:3000',
-	url: 'https://api.giga-mesto.nomoredomains.xyz',
+	url: BASE_URL,
 	headers: {
 		'Authorization': `Bearer ${token}`,
 		'Content-Type': 'application/json'
