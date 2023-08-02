@@ -3,7 +3,7 @@ const router = require('express').Router();
 const auth = require('../middlewares/auth');
 const { createUserJoiValidation, loginJoiValidation } = require('../middlewares/JoiValidator');
 
-const { createUser, login, logout } = require('../controllers/users');
+const { login, createUser, logout } = require('../controllers/users');
 
 const usersRouter = require('./users');
 const cardsRouter = require('./cards');
@@ -18,12 +18,12 @@ router.get('/crash-test', () => {
 
 router.post('/signin', loginJoiValidation, login);
 router.post('/signup', createUserJoiValidation, createUser);
-router.post('/signout', logout);
 
 router.use(auth);
 
 router.use('/users', usersRouter);
 router.use('/cards', cardsRouter);
+router.post('/signout', logout);
 
 router.use('*', (req, res, next) => {
   next(new NotFoundError('Ресурс не найден. Проверьте правильность введенного URL.'));
