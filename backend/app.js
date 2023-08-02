@@ -17,7 +17,7 @@ const cardsRouter = require('./routes/cards');
 
 const { createUser, login, logout } = require('./controllers/users');
 
-const { INTERNAL_SERVER_ERROR } = require('./utils/ServerResponseStatuses');
+const errorHandler = require('./errors/ErrorHandler');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
@@ -68,12 +68,7 @@ app.use('*', (req, res, next) => {
 app.use(errorLogger);
 
 app.use(errors());
-
-app.use((err, req, res, next) => {
-  const { statusCode = INTERNAL_SERVER_ERROR } = err;
-  res.status(statusCode).send({ message: statusCode === INTERNAL_SERVER_ERROR ? 'Стандартная ошибка' : err.message });
-  next();
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
