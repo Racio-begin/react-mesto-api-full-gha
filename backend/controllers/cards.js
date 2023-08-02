@@ -44,7 +44,7 @@ const deleteCard = (req, res, next) => {
       if (card.owner.toString() !== userId) {
         return next(new ForbiddenError('Невозможно удаленить чужую карточку.'));
       }
-      Card.findByIdAndRemove(cardId)
+      Card.findByIdAndRemove(cardId) // todo: поменять метод на deleteOne (проскакивает в next)
         .then(() => res.status(OK_STATUS).send(card))
         .catch(next);
     })
@@ -65,7 +65,6 @@ const likeCard = (req, res, next) => {
     { $addToSet: { likes: userId } }, // добавить _id в массив, если его там нет
     {
       new: true,
-      runValidators: true,
     },
   )
     .then((card) => {
@@ -91,7 +90,6 @@ const dislikeCard = (req, res, next) => {
     { $pull: { likes: userId } }, // убрать _id из массива
     {
       new: true,
-      runValidators: true,
     },
   )
     .then((card) => {
