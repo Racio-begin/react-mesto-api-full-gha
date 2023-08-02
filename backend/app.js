@@ -7,6 +7,7 @@ const { errors } = require('celebrate');
 
 const cors = require('cors');
 const NotFoundError = require('./errors/NotFoundError');
+const errorHandler = require('./errors/ErrorHandler');
 
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -16,8 +17,6 @@ const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 
 const { createUser, login, logout } = require('./controllers/users');
-
-const errorHandler = require('./errors/ErrorHandler');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
