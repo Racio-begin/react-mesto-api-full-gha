@@ -15,7 +15,7 @@ const createUserJoiValidation = celebrate({
 
 const getUserJoiValidation = celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().length(24).hex(),
+    userId: Joi.string().length(24).required().hex(),
   }),
 });
 
