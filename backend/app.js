@@ -7,9 +7,9 @@ const { errors } = require('celebrate');
 
 const cors = require('cors');
 
-const routes = require('./routes/index');
+const errorHandler = require('./middlewares/errorHandler');
 
-const errorHandler = require('./errors/ErrorHandler');
+const routes = require('./routes/index');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
