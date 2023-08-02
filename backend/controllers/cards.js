@@ -45,7 +45,7 @@ const deleteCard = (req, res, next) => {
         return next(new ForbiddenError('Невозможно удаленить чужую карточку.'));
       }
       Card.deleteOne(cardId)
-        .then(() => res.send(card))
+        .then(() => res.status(OK_STATUS).send(card))
         .catch(next);
     })
     .catch((err) => {
