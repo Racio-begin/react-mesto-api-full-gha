@@ -41,7 +41,6 @@ function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	const [userData, setUserData] = useState({ email: "", password: "" });
-	// const [userData, setUserData] = useState({}); проверка - если объект пуст
 
 	const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
 	const [successInfoTooltip, setSuccessInfoTooltip] = useState({ image: "", text: "" });
